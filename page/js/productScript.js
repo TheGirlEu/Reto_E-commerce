@@ -8,16 +8,26 @@ const init = async () => {
   // 1.1 para obtener un solo producto debes obtener el id que se encuentra en los query params de la url
   // esto lo podemos realizar utilizando el `window.location.search` del cual podremos obtener el id
   // 1.2 llamar la api https://fakestoreapi.com y guardar los resultados en una constante llamada `result`.
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
 
-  const id = "";
-
-  const result = "...";
+  const data = await fetch(`h+https://fakestoreapi.com/products/${id}`);
+  const { title, category, description, image, price } = await data.json();
 
   // 2. con la data del producto inyecta o remplaza la información que se encuentra en el HTML por la información obtenida de la API
   // te recomiendo que revises el elemento <div class="small-container single-product"> en el encontraras todos los elementos que debes
   // modificar con Javascript y asi mostrar la información correcta
 
-  const titleElement = "...";
+  const titleElement = document.getElementById("title");
+  titleElement.innerHTML = title;
+  const categoryElementt = document.getElementById("category");
+  categoryElementt.innerHTML = category;
+  const descriptionElementt = document.getElementById("description");
+  descriptionElementt.innerHTML = description;
+  const imageElementt = document.getElementById("image");
+  imageElementt.innerHTML = image;
+  const priceElementt = document.getElementById("price");
+  priceElementt.innerHTML = `${price}`;
 
   // 3. agrega evento al botón `add to card` de tal manera que cuando se presione se emita una window alarm con el mensaje
   // `se tiene agregados ${numero de elementos agregados} con valor total ${el precio del producto multiplicado por la cantidad}`
@@ -25,8 +35,18 @@ const init = async () => {
   // 3.2 obtén del documento el botón `add to card` y agrega el evento para emitir el window alarm.
   // 3.3 si el valor es negativo emitir en el window alarm el mensaje `valores negativos no permitidos`
 
-  const button = "...";
-  const quantity = "...";
+  const button = document.getElementById("btn");
+  const quantity = document.getElementById("quantity");
+
+  button.addEventListener("click", () => {
+    if (quantity.value > 0) {
+      alert(
+        `se tiene agregados ${quantity.value} con valor total ${quantity.value = price}`
+      );
+    } else {
+      alert("valores negativos no permitidos");
+    }
+  });
 };
 
 init();
